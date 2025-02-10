@@ -7,16 +7,26 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.proyectojava.HelloController">
     <top>
-        <HBox alignment="CENTER_RIGHT" spacing="10" padding="10">
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
             <Button text="Restablecer Contraseña" onAction="#onResetPasswordClick"/>
         </HBox>
     </top>
     
     <center>
-        <VBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20;">
+        <VBox alignment="CENTER" spacing="20.0">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            
             <Text fx:id="balanceText" style="-fx-font-size: 24;"/>
             
-            <VBox alignment="CENTER" spacing="10" style="-fx-padding: 20; -fx-border-color: #cccccc;">
+            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #cccccc;">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
                 <Label text="Ingrese su contraseña:"/>
                 <PasswordField fx:id="passwordField"/>
                 <Button text="Acceder" onAction="#onLoginClick"/>
@@ -31,7 +41,10 @@
     </center>
     
     <left>
-        <VBox style="-fx-padding: 20;">
+        <VBox>
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
             <Label text="Historial de Transacciones"/>
             <ListView fx:id="transactionList" prefWidth="250"/>
         </VBox>
