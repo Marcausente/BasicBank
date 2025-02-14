@@ -21,5 +21,6 @@
         <Label text="Contraseña:"/>
         <PasswordField fx:id="passwordField"/>
         <Button text="Iniciar Sesión" onAction="#onLoginClick"/>
+        <Button text="Restablecer Contraseña" onAction="#onResetPasswordClick"/>
     </VBox>
 </VBox> 
