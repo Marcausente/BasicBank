@@ -2,6 +2,7 @@ package com.example.proyectojava;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.collections.FXCollections;
 import java.time.LocalDateTime;
