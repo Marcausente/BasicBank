@@ -22,7 +22,7 @@ public class LoginController {
         if (username.equals("usuario") && password.equals("12345")) {
             try {
                 // Cargar la vista del banco
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 
                 // Obtener la ventana actual y cambiar la escena
@@ -31,7 +31,8 @@ public class LoginController {
                 stage.setTitle("Aplicación Bancaria");
                 
             } catch (IOException e) {
-                showAlert("Error", "Error al cargar la aplicación", Alert.AlertType.ERROR);
+                e.printStackTrace(); // Esto nos ayudará a ver el error específico en la consola
+                showAlert("Error", "Error al cargar la aplicación: " + e.getMessage(), Alert.AlertType.ERROR);
             }
         } else {
             showAlert("Error", "Usuario o contraseña incorrectos", Alert.AlertType.ERROR);
