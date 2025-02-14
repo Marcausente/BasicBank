@@ -7,13 +7,11 @@ import javafx.collections.FXCollections;
 
 public class HelloController {
     @FXML private Text balanceText;
-    @FXML private PasswordField passwordField;
     @FXML private ListView<String> transactionList;
     @FXML private ComboBox<String> currencySelector;
     
     private double balance = 1000.0;
     private String currentCurrency = "€";
-    private boolean isLoggedIn = false;
     
     @FXML
     public void initialize() {
@@ -26,16 +24,6 @@ public class HelloController {
             "2024-03-20 10:30 - Depósito de 100€",
             "2024-03-19 15:45 - Retiro de 50€"
         ));
-    }
-    
-    @FXML
-    protected void onLoginClick() {
-        if (passwordField.getText().equals("1234")) { // Contraseña de ejemplo
-            isLoggedIn = true;
-            showAlert("Éxito", "Inicio de sesión correcto", Alert.AlertType.INFORMATION);
-        } else {
-            showAlert("Error", "Contraseña incorrecta", Alert.AlertType.ERROR);
-        }
     }
     
     private void updateBalance() {
@@ -51,19 +39,11 @@ public class HelloController {
     
     @FXML
     protected void onWithdrawClick() {
-        if (!isLoggedIn) {
-            showAlert("Error", "Debe iniciar sesión primero", Alert.AlertType.ERROR);
-            return;
-        }
         // Aquí implementarías la lógica de retiro
     }
     
     @FXML
     protected void onDepositClick() {
-        if (!isLoggedIn) {
-            showAlert("Error", "Debe iniciar sesión primero", Alert.AlertType.ERROR);
-            return;
-        }
         // Aquí implementarías la lógica de depósito
     }
     
