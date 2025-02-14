@@ -22,10 +22,11 @@ public class LoginController {
         if (username.equals("usuario") && password.equals(savedPassword)) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                Scene scene = new Scene(fxmlLoader.load(), 700, 600);
                 Stage stage = (Stage) usernameField.getScene().getWindow();
                 stage.setScene(scene);
                 stage.setTitle("Aplicación Bancaria");
+                stage.setResizable(true);
             } catch (IOException e) {
                 e.printStackTrace();
                 showAlert("Error", "Error al cargar la aplicación: " + e.getMessage(), Alert.AlertType.ERROR);

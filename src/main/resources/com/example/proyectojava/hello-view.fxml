@@ -7,33 +7,37 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.proyectojava.HelloController">
     <top>
-        <VBox alignment="CENTER" style="-fx-background-color: #f0f0f0;">
+        <VBox alignment="CENTER" style="-fx-background-color: #f0f0f0;" spacing="15">
             <padding>
                 <Insets top="30" right="20" bottom="30" left="20"/>
             </padding>
             <Text text="Banca Online" style="-fx-font-size: 28; -fx-font-weight: bold;"/>
+            
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Moneda:" style="-fx-font-size: 14;"/>
+                <ComboBox fx:id="currencySelector" style="-fx-font-size: 14;"/>
+            </HBox>
+            
             <Text fx:id="balanceText" style="-fx-font-size: 36; -fx-font-weight: bold;"/>
             <Button text="Ver saldo en todas las divisas" onAction="#onShowAllBalancesClick" 
-                    style="-fx-font-size: 14; -fx-margin-top: 10;"/>
+                    style="-fx-font-size: 14;"/>
         </VBox>
     </top>
     
     <center>
-        <VBox alignment="CENTER" spacing="30.0">
+        <VBox alignment="CENTER" spacing="20.0">
             <padding>
                 <Insets top="30" right="20" bottom="30" left="20"/>
             </padding>
             
             <VBox alignment="CENTER" spacing="15">
                 <Label text="Operaciones" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
-                <HBox spacing="20" alignment="CENTER">
-                    <Button text="Retirar" onAction="#onWithdrawClick" style="-fx-font-size: 14; -fx-min-width: 100;"/>
-                    <Button text="Ingresar" onAction="#onDepositClick" style="-fx-font-size: 14; -fx-min-width: 100;"/>
-                </HBox>
-                <HBox spacing="10" alignment="CENTER">
-                    <Label text="Moneda:" style="-fx-font-size: 14;"/>
-                    <ComboBox fx:id="currencySelector" style="-fx-font-size: 14;"/>
-                </HBox>
+                <VBox spacing="15" alignment="CENTER">
+                    <Button text="Ingresar" onAction="#onDepositClick" 
+                            style="-fx-font-size: 14; -fx-min-width: 150; -fx-min-height: 40;"/>
+                    <Button text="Retirar" onAction="#onWithdrawClick" 
+                            style="-fx-font-size: 14; -fx-min-width: 150; -fx-min-height: 40;"/>
+                </VBox>
             </VBox>
         </VBox>
     </center>
