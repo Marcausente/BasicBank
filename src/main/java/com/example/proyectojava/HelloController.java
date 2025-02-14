@@ -86,9 +86,33 @@ public class HelloController {
                 return;
             }
 
-            // Convertir a euros (moneda base)
+            // Convertir a euros para la validación
             double amountInEuros = convertToEuros(amount, currencyChoice.getValue());
             
+            // Verificar si el ingreso supera el límite de 5000€
+            if (amountInEuros > 5000) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("⚠️ ALERTA FISCAL ⚠️");
+                alert.setHeaderText("ERROR, IRREGULARIDAD FISCAL DETECTADA");
+                alert.setContentText("UN INSPECTOR DE HACIENDA ESTÁ YENDO HACIA SU UBICACIÓN AHORA MISMO");
+                
+                // Personalizar el diálogo para que sea más intimidante
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.setStyle(
+                    "-fx-background-color: #ff0000; " +
+                    "-fx-font-weight: bold; " +
+                    "-fx-text-fill: white;"
+                );
+                
+                // Hacer que el texto sea blanco
+                dialogPane.lookupAll(".label").forEach(label -> 
+                    label.setStyle("-fx-text-fill: white;")
+                );
+                
+                alert.showAndWait();
+                return;
+            }
+
             // Actualizar el balance
             balance += amountInEuros;
             
