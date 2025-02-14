@@ -27,6 +27,13 @@ public class HelloController {
     public void initialize() {
         currencySelector.setItems(FXCollections.observableArrayList("€", "$", "£"));
         currencySelector.setValue("€");
+        
+        // Añadir listener para el cambio de moneda
+        currencySelector.setOnAction(event -> {
+            currentCurrency = currencySelector.getValue();
+            updateBalance();
+        });
+        
         updateBalance();
         
         // Inicializar la lista de transacciones si está vacía
@@ -45,7 +52,7 @@ public class HelloController {
         TextField amountField = new TextField();
         ComboBox<String> currencyChoice = new ComboBox<>();
         currencyChoice.setItems(FXCollections.observableArrayList("€", "$", "£"));
-        currencyChoice.setValue("€");
+        currencyChoice.setValue(currentCurrency);
 
         // Crear el layout del diálogo
         GridPane grid = new GridPane();
@@ -91,7 +98,7 @@ public class HelloController {
                 amount,
                 currencyChoice.getValue());
             
-            transactionList.getItems().add(0, transaction); // Añadir al principio de la lista
+            transactionList.getItems().add(0, transaction);
             
             updateBalance();
             showAlert("Éxito", "Ingreso realizado correctamente", Alert.AlertType.INFORMATION);
@@ -113,7 +120,6 @@ public class HelloController {
     
     private void updateBalance() {
         double displayBalance = balance;
-        String displayCurrency = currentCurrency;
         
         // Convertir el balance según la moneda seleccionada
         switch (currentCurrency) {
@@ -125,24 +131,7 @@ public class HelloController {
                 break;
         }
         
-        balanceText.setText(String.format("Saldo: %.2f%s", displayBalance, displayCurrency));
-    }
-    
-    private void showAlert(String title, String content, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-    
-    @FXML
-    protected void onWithdrawClick() {
-        // Implementaremos esto después
-    }
-    
-    @FXML
-    protected void onResetPasswordClick() {
-        // Aquí implementarías la lógica de restablecimiento de contraseña
+        balanceText.setText(String.format("Saldo: %.2f%s", displayBalance, currentCurrency));
     }
     
     @FXML
@@ -170,5 +159,22 @@ public class HelloController {
         alert.getDialogPane().setPrefWidth(300);
         
         alert.showAndWait();
+    }
+    
+    private void showAlert(String title, String content, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    
+    @FXML
+    protected void onWithdrawClick() {
+        // Implementaremos esto después
+    }
+    
+    @FXML
+    protected void onResetPasswordClick() {
+        // Aquí implementarías la lógica de restablecimiento de contraseña
     }
 }
