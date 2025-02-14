@@ -12,7 +12,7 @@ public class LoginController {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     
-    private static String savedPassword = "12345"; // En una aplicación real, esto estaría en una base de datos
+    private static String savedPassword = "12345";
 
     @FXML
     protected void onLoginClick() {

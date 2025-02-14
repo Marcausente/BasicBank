@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 400, 500);
         stage.setTitle("Login - Aplicación Bancaria");
         stage.setScene(scene);
-        stage.setResizable(false);  // Hacer que la ventana de login no sea redimensionable
+        stage.setResizable(false);
         stage.show();
     }
 

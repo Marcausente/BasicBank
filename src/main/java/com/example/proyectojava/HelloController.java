@@ -19,7 +19,6 @@ public class HelloController {
     private String currentCurrency = "€";
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     
-    // Tasas de conversión (en una aplicación real, estas vendrían de una API)
     private final double EUR_TO_USD = 1.09;
     private final double EUR_TO_GBP = 0.86;
     
@@ -28,7 +27,6 @@ public class HelloController {
         currencySelector.setItems(FXCollections.observableArrayList("€", "$", "£"));
         currencySelector.setValue("€");
         
-        // Añadir listener para el cambio de moneda
         currencySelector.setOnAction(event -> {
             currentCurrency = currencySelector.getValue();
             updateBalance();
@@ -36,7 +34,6 @@ public class HelloController {
         
         updateBalance();
         
-        // Inicializar la lista de transacciones si está vacía
         if (transactionList.getItems() == null) {
             transactionList.setItems(FXCollections.observableArrayList());
         }
@@ -48,13 +45,11 @@ public class HelloController {
         dialog.setTitle("Ingresar Dinero");
         dialog.setHeaderText("Introduce la cantidad a ingresar");
 
-        // Crear los campos del diálogo
         TextField amountField = new TextField();
         ComboBox<String> currencyChoice = new ComboBox<>();
         currencyChoice.setItems(FXCollections.observableArrayList("€", "$", "£"));
         currencyChoice.setValue(currentCurrency);
 
-        // Crear el layout del diálogo
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -66,7 +61,6 @@ public class HelloController {
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        // Convertir el resultado
         dialog.setResultConverter(buttonType -> {
             if (buttonType == ButtonType.OK) {
                 try {
@@ -86,17 +80,14 @@ public class HelloController {
                 return;
             }
 
-            // Convertir a euros para la validación
             double amountInEuros = convertToEuros(amount, currencyChoice.getValue());
             
-            // Verificar si el ingreso supera el límite de 5000€
             if (amountInEuros > 5000) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("⚠️ ALERTA FISCAL ⚠️");
                 alert.setHeaderText("ERROR, IRREGULARIDAD FISCAL DETECTADA");
                 alert.setContentText("UN INSPECTOR DE HACIENDA ESTÁ YENDO HACIA SU UBICACIÓN AHORA MISMO");
                 
-                // Personalizar el diálogo para que sea más intimidante
                 DialogPane dialogPane = alert.getDialogPane();
                 dialogPane.setStyle(
                     "-fx-background-color: #ff0000; " +
@@ -104,8 +95,7 @@ public class HelloController {
                     "-fx-text-fill: white;"
                 );
                 
-                // Hacer que el texto sea blanco
-                dialogPane.lookupAll(".label").forEach(label -> 
+                dialogPane.lookupAll(".label").forEach(label ->
                     label.setStyle("-fx-text-fill: white;")
                 );
                 
@@ -113,7 +103,6 @@ public class HelloController {
                 return;
             }
 
-            // Actualizar el balance
             balance += amountInEuros;
             
             // Registrar la transacción
@@ -145,7 +134,6 @@ public class HelloController {
     private void updateBalance() {
         double displayBalance = balance;
         
-        // Convertir el balance según la moneda seleccionada
         switch (currentCurrency) {
             case "$":
                 displayBalance = balance * EUR_TO_USD;
@@ -160,12 +148,10 @@ public class HelloController {
     
     @FXML
     protected void onShowAllBalancesClick() {
-        // Calcular saldos en todas las monedas
         double balanceEUR = balance;
         double balanceUSD = balance * EUR_TO_USD;
         double balanceGBP = balance * EUR_TO_GBP;
 
-        // Crear el contenido del diálogo
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Saldo en todas las divisas");
         alert.setHeaderText("Tu saldo actual en diferentes monedas:");
@@ -178,7 +164,6 @@ public class HelloController {
             
         alert.setContentText(content);
         
-        // Hacer el diálogo redimensionable
         alert.getDialogPane().setMinHeight(200);
         alert.getDialogPane().setPrefWidth(300);
         
@@ -198,13 +183,11 @@ public class HelloController {
         dialog.setTitle("Retirar Dinero");
         dialog.setHeaderText("Introduce la cantidad a retirar");
 
-        // Crear los campos del diálogo
         TextField amountField = new TextField();
         ComboBox<String> currencyChoice = new ComboBox<>();
         currencyChoice.setItems(FXCollections.observableArrayList("€", "$", "£"));
         currencyChoice.setValue(currentCurrency);
 
-        // Crear el layout del diálogo
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -216,7 +199,6 @@ public class HelloController {
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
-        // Convertir el resultado
         dialog.setResultConverter(buttonType -> {
             if (buttonType == ButtonType.OK) {
                 try {
@@ -236,12 +218,9 @@ public class HelloController {
                 return;
             }
 
-            // Convertir a euros para la comparación
             double amountInEuros = convertToEuros(amount, currencyChoice.getValue());
             
-            // Verificar si hay suficiente saldo
             if (amountInEuros > balance) {
-                // Calcular el saldo disponible en la moneda seleccionada
                 double availableInSelectedCurrency = balance;
                 switch (currencyChoice.getValue()) {
                     case "$":
@@ -260,11 +239,9 @@ public class HelloController {
                 return;
             }
             
-            // Actualizar el balance
             balance -= amountInEuros;
             
-            // Registrar la transacción
-            String transaction = String.format("%s - Retiro de %.2f%s", 
+            String transaction = String.format("%s - Retiro de %.2f%s",
                 LocalDateTime.now().format(formatter),
                 amount,
                 currencyChoice.getValue());
@@ -279,6 +256,5 @@ public class HelloController {
     
     @FXML
     protected void onResetPasswordClick() {
-        // Aquí implementarías la lógica de restablecimiento de contraseña
     }
 }
