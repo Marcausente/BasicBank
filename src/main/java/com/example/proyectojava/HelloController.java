@@ -144,4 +144,31 @@ public class HelloController {
     protected void onResetPasswordClick() {
         // Aquí implementarías la lógica de restablecimiento de contraseña
     }
+    
+    @FXML
+    protected void onShowAllBalancesClick() {
+        // Calcular saldos en todas las monedas
+        double balanceEUR = balance;
+        double balanceUSD = balance * EUR_TO_USD;
+        double balanceGBP = balance * EUR_TO_GBP;
+
+        // Crear el contenido del diálogo
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Saldo en todas las divisas");
+        alert.setHeaderText("Tu saldo actual en diferentes monedas:");
+        
+        String content = String.format("""
+            Euros (€): %.2f€
+            Dólares ($): %.2f$
+            Libras (£): %.2f£""", 
+            balanceEUR, balanceUSD, balanceGBP);
+            
+        alert.setContentText(content);
+        
+        // Hacer el diálogo redimensionable
+        alert.getDialogPane().setMinHeight(200);
+        alert.getDialogPane().setPrefWidth(300);
+        
+        alert.showAndWait();
+    }
 }

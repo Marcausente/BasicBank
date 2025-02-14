@@ -13,6 +13,8 @@
             </padding>
             <Text text="Banca Online" style="-fx-font-size: 28; -fx-font-weight: bold;"/>
             <Text fx:id="balanceText" style="-fx-font-size: 36; -fx-font-weight: bold;"/>
+            <Button text="Ver saldo en todas las divisas" onAction="#onShowAllBalancesClick" 
+                    style="-fx-font-size: 14; -fx-margin-top: 10;"/>
         </VBox>
     </top>
     
