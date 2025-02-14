@@ -170,7 +170,87 @@ public class HelloController {
     
     @FXML
     protected void onWithdrawClick() {
-        // Implementaremos esto después
+        Dialog<Double> dialog = new Dialog<>();
+        dialog.setTitle("Retirar Dinero");
+        dialog.setHeaderText("Introduce la cantidad a retirar");
+
+        // Crear los campos del diálogo
+        TextField amountField = new TextField();
+        ComboBox<String> currencyChoice = new ComboBox<>();
+        currencyChoice.setItems(FXCollections.observableArrayList("€", "$", "£"));
+        currencyChoice.setValue(currentCurrency);
+
+        // Crear el layout del diálogo
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.add(new Label("Cantidad:"), 0, 0);
+        grid.add(amountField, 1, 0);
+        grid.add(new Label("Moneda:"), 0, 1);
+        grid.add(currencyChoice, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        // Convertir el resultado
+        dialog.setResultConverter(buttonType -> {
+            if (buttonType == ButtonType.OK) {
+                try {
+                    return Double.parseDouble(amountField.getText());
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+            return null;
+        });
+
+        Optional<Double> result = dialog.showAndWait();
+        
+        result.ifPresent(amount -> {
+            if (amount <= 0) {
+                showAlert("Error", "La cantidad debe ser mayor que 0", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Convertir a euros para la comparación
+            double amountInEuros = convertToEuros(amount, currencyChoice.getValue());
+            
+            // Verificar si hay suficiente saldo
+            if (amountInEuros > balance) {
+                // Calcular el saldo disponible en la moneda seleccionada
+                double availableInSelectedCurrency = balance;
+                switch (currencyChoice.getValue()) {
+                    case "$":
+                        availableInSelectedCurrency *= EUR_TO_USD;
+                        break;
+                    case "£":
+                        availableInSelectedCurrency *= EUR_TO_GBP;
+                        break;
+                }
+                
+                showAlert("Error", 
+                    String.format("Saldo insuficiente. Tu saldo disponible es %.2f%s", 
+                        availableInSelectedCurrency, 
+                        currencyChoice.getValue()), 
+                    Alert.AlertType.ERROR);
+                return;
+            }
+            
+            // Actualizar el balance
+            balance -= amountInEuros;
+            
+            // Registrar la transacción
+            String transaction = String.format("%s - Retiro de %.2f%s", 
+                LocalDateTime.now().format(formatter),
+                amount,
+                currencyChoice.getValue());
+            
+            transactionList.getItems().add(0, transaction);
+            
+            updateBalance();
+            showAlert("Éxito", String.format("Has retirado %.2f%s correctamente", 
+                amount, currencyChoice.getValue()), Alert.AlertType.INFORMATION);
+        });
     }
     
     @FXML
