@@ -23,15 +23,6 @@
             
             <Text fx:id="balanceText" style="-fx-font-size: 24;"/>
             
-            <VBox alignment="CENTER" spacing="10" style="-fx-border-color: #cccccc;">
-                <padding>
-                    <Insets top="20" right="20" bottom="20" left="20"/>
-                </padding>
-                <Label text="Ingrese su contraseña:"/>
-                <PasswordField fx:id="passwordField"/>
-                <Button text="Acceder" onAction="#onLoginClick"/>
-            </VBox>
-            
             <HBox spacing="10" alignment="CENTER">
                 <Button text="Retirar" onAction="#onWithdrawClick"/>
                 <Button text="Ingresar" onAction="#onDepositClick"/>
